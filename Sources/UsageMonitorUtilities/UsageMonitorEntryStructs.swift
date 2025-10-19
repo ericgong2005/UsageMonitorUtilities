@@ -66,7 +66,15 @@ public struct BatteryChargeEntry: Equatable, CustomStringConvertible {
             PresentDOD2: data.readInteger(at: offset + 19, as: Int8.self)
         )
     }
+    
+    public static func equal(_ first: BatteryChargeEntry, _ second: BatteryChargeEntry) -> Bool {
+        return first.CurrentCapacity == second.CurrentCapacity
+    }
 
+    public func equals(to other: BatteryChargeEntry) -> Bool {
+        return Self.equal(self, other)
+    }
+    
     public var description: String {
         "BatteryChargeEntry(EntryTime: \(EntryTime), Amperage: \(Amperage), RawCurrentCapacity: \(RawCurrentCapacity), " +
         "Voltage: \(Voltage), CellVoltages: [\(CellVoltage0), \(CellVoltage1), \(CellVoltage2)], " +
@@ -134,6 +142,14 @@ public struct BatteryHealthEntry: Equatable, CustomStringConvertible {
             WeightedRa2: data.readInteger(at: offset + 16, as: Int8.self),
             ExternalConnected: data.readInteger(at: offset + 17, as: Int8.self)
         )
+    }
+    
+    public static func equal(_ first: BatteryHealthEntry, _ second: BatteryHealthEntry) -> Bool {
+        return first.CycleCount == second.CycleCount && first.ExternalConnected == second.ExternalConnected
+    }
+
+    public func equals(to other: BatteryHealthEntry) -> Bool {
+        return Self.equal(self, other)
     }
 
     public var description: String {
