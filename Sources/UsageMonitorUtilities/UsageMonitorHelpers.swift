@@ -20,7 +20,8 @@ public extension Data {
     }
 }
 
-public func AtomicAppend(_ data: Data, to path: String) {
+public func AtomicAppend(_ data: Data, to url: URL) {
+    let path = url.path
     let fd = open(path, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
     guard fd >= 0 else { perror("open"); return }
     defer { close(fd) }
