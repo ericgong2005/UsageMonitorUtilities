@@ -2,7 +2,11 @@ import Foundation
 import Darwin
 
 public func now() -> UInt32 { UInt32(Date().timeIntervalSinceReferenceDate) }
-public func NowString() -> String { ISO8601DateFormatter().string(from: Date()) }
+public func NowString() -> String {
+    let f = DateFormatter()
+    f.dateFormat = "yyyy-MM-dd-HH-mm-ss'Z'"
+    return f.string(from: Date())
+}
 
 public extension Data {
     mutating func appendInteger<T: FixedWidthInteger>(_ value: T) {
