@@ -75,6 +75,12 @@ public struct BatteryChargeEntry: Equatable, CustomStringConvertible {
         return Self.equal(self, other)
     }
     
+    public var printline: String {
+        "\(EntryTime),\(Amperage) A, \(RawCurrentCapacity) mAh, " +
+        "\(Voltage) V, [\(CellVoltage0) V, \(CellVoltage1) V, \(CellVoltage2) V], " +
+        "\(CurrentCapacity)%, [\(PresentDOD0)%, \(PresentDOD1)%, \(PresentDOD2)%]"
+    }
+    
     public var description: String {
         "BatteryChargeEntry(EntryTime: \(EntryTime), Amperage: \(Amperage), RawCurrentCapacity: \(RawCurrentCapacity), " +
         "Voltage: \(Voltage), CellVoltages: [\(CellVoltage0), \(CellVoltage1), \(CellVoltage2)], " +
@@ -151,6 +157,12 @@ public struct BatteryHealthEntry: Equatable, CustomStringConvertible {
     public func equals(to other: BatteryHealthEntry) -> Bool {
         return Self.equal(self, other)
     }
+    
+    public var printline: String {
+        "\(EntryTime), \(CycleCount), \(RawMaxCapacity) mAh, " +
+        "[\(QMax0) mAh, \(QMax1) mAh, \(QMax2) mAh], [\(WeightedRa0), \(WeightedRa1), \(WeightedRa2)], " +
+        "\(ExternalConnected)"
+    }
 
     public var description: String {
         "BatteryHealthEntry(EntryTime: \(EntryTime), CycleCount: \(CycleCount), RawMaxCapacity: \(RawMaxCapacity), " +
@@ -190,6 +202,10 @@ public struct ScreenStateEntry: Equatable, CustomStringConvertible {
         let raw: Int8 = data.readInteger(at: offset + 4, as: Int8.self)
         guard let state = ScreenStateEnum(rawValue: raw) else { return nil }
         return ScreenStateEntry(EntryTime: time, ScreenState: state)
+    }
+    
+    public var printline: String {
+        "\(EntryTime), \(ScreenState.label)"
     }
 
     public var description: String {
